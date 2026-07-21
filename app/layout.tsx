@@ -12,12 +12,12 @@ export async function generateMetadata(): Promise<Metadata> {
   const protocol = incoming.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
   const origin = `${protocol}://${host}`;
   return {
-    title: "TaaS — Sátira interactiva sobre la economía de la atención",
-    description: "Una startup demasiado plausible: mira un anuncio, desbloquea un baño y descubre hasta dónde puede llegar la economía de la atención.",
+    title: "Toilet as a Service — Mira 12 segundos. Desbloquea 4 minutos.",
+    description: "Infraestructura pública financiada por atención. Una sátira interactiva sobre el último espacio que la economía de la atención todavía no había monetizado.",
     metadataBase: new URL(origin),
     alternates: { canonical: origin },
-    openGraph: { title: "TaaS — El alivio, patrocinado.", description: "Una sátira interactiva demasiado plausible.", url: origin, images: [{ url: `${origin}/og.png`, width: 1200, height: 630 }] },
-    twitter: { card: "summary_large_image", title: "TaaS — El alivio, patrocinado.", description: "Una sátira interactiva demasiado plausible.", images: [`${origin}/og.png`] },
+    openGraph: { title: "Toilet as a Service", description: "Mira 12 segundos. Desbloquea 4 minutos. Es sátira. Por ahora.", url: origin, images: [{ url: `${origin}/og.png`, width: 1376, height: 768 }] },
+    twitter: { card: "summary_large_image", title: "Toilet as a Service", description: "La economía de la atención encontró lo último que quedaba: tu urgencia.", images: [`${origin}/og.png`] },
   };
 }
 

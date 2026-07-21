@@ -2,37 +2,34 @@
 
 import { useEffect, useState } from "react";
 
-const testimonials = [
-  { quote: "Llegué con 3% de batería y 0% de dignidad. Funcionó.", name: "M. Duarte", role: "Reacción ficticia · CDMX" },
-  { quote: "Por fin monetizamos el tiempo muerto del cliente.", name: "L. Serrano", role: "Personaje del piloto conceptual" },
-  { quote: "El anuncio fue raro, pero el baño estaba impecable.", name: "Sofía R.", role: "Reacción ficticia · Flush+" },
-];
-
-const shareCopy = "Aguanté 12 segundos de publicidad para desbloquear un baño que no existe. Lo preocupante es que el modelo sí podría existir.";
+const launchCopy =
+  "La economía de la atención encontró lo último que quedaba: tu urgencia. Mira 12 segundos. Desbloquea 4 minutos. Toilet as a Service.";
 
 export default function Home() {
   const [demoOpen, setDemoOpen] = useState(false);
   const [seconds, setSeconds] = useState(12);
   const [toast, setToast] = useState("");
-  const [vote, setVote] = useState<"inevitable" | "absurdo" | null>(null);
   const unlocked = seconds === 0;
 
   useEffect(() => {
     if (!demoOpen || seconds <= 0) return;
-    const timer = window.setInterval(() => setSeconds((value) => Math.max(0, value - 1)), 1000);
+    const timer = window.setInterval(
+      () => setSeconds((value) => Math.max(0, value - 1)),
+      1000,
+    );
     return () => window.clearInterval(timer);
   }, [demoOpen, seconds]);
 
   useEffect(() => {
     if (!demoOpen) return;
-    const onKeyDown = (event: KeyboardEvent) => {
+    const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") setDemoOpen(false);
     };
     document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keydown", closeOnEscape);
     return () => {
       document.body.style.overflow = "";
-      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("keydown", closeOnEscape);
     };
   }, [demoOpen]);
 
@@ -41,97 +38,152 @@ export default function Home() {
     setDemoOpen(true);
   }
 
-  function reserve() {
-    setToast("Simulación finalizada. Ninguna vejiga fue monetizada.");
-    window.setTimeout(() => setToast(""), 3500);
-    setDemoOpen(false);
-  }
-
   async function shareExperience() {
     const url = window.location.href.split("#")[0];
     try {
       if (navigator.share) {
-        await navigator.share({ title: "Toilet as a Service", text: shareCopy, url });
-        setToast("Experimento compartido. La distopía te agradece.");
+        await navigator.share({ title: "Toilet as a Service", text: launchCopy, url });
       } else {
-        await navigator.clipboard.writeText(`${shareCopy} ${url}`);
-        setToast("Enlace y copy copiados.");
+        await navigator.clipboard.writeText(`${launchCopy} ${url}`);
       }
+      setToast("Copy y enlace listos. La urgencia ya es contenido.");
     } catch {
-      setToast("Compartir cancelado. Tu dignidad permanece intacta.");
+      setToast("Compartir cancelado.");
     }
-    window.setTimeout(() => setToast(""), 3500);
+    window.setTimeout(() => setToast(""), 3200);
   }
 
   return (
     <main>
-      <nav className="nav shell" aria-label="Navegación principal">
-        <a href="#inicio" className="brand" aria-label="TaaS, inicio"><span className="brand-mark">T/</span><span>TOILET AS A SERVICE</span></a>
-        <div className="nav-links"><a href="#como">Cómo funciona</a><a href="#negocios">Para negocios</a><a href="#planes">Precios</a></div>
-        <button className="button button-small" onClick={openDemo}>Encontrar un baño <span>↗</span></button>
-      </nav>
+      <section className="hero" id="inicio">
+        <div className="hero-image" role="img" aria-label="Cabina urbana de Toilet as a Service durante la noche" />
+        <div className="hero-shade" />
 
-      <section className="hero shell" id="inicio">
-        <div className="hero-copy">
-          <div className="eyebrow"><span className="live-dot" /> PROTOTIPO INTERACTIVO · RED SIMULADA</div>
-          <h1>El alivio,<br /><em>patrocinado.</em></h1>
-          <p className="hero-lede">Baños limpios donde los necesitas. Mira un anuncio breve, desbloquea la puerta y sigue con tu día.</p>
-          <div className="hero-actions"><button className="button button-primary" onClick={openDemo}>Iniciar simulación <span>↗</span></button><a className="text-link" href="#como">Ver cómo funciona <span>↓</span></a></div>
-          <div className="trust"><div className="faces"><span>AM</span><span>JR</span><span>LS</span><span>+9k</span></div><div><b>4.9</b> <span className="stars">★★★★★</span><small>valor ilustrativo del piloto conceptual</small></div></div>
-        </div>
-
-        <div className="hero-console" aria-label="Estado del baño más cercano">
-          <div className="console-top"><span>SIMULACIÓN · WC—044</span><span className="status"><i /> DISPONIBLE</span></div>
-          <div className="console-visual">
-            <div className="door"><div className="door-number">044</div><div className="handle" /><div className="scan-line" /></div>
-            <div className="distance"><b>84</b><span>m<br />de ti</span></div>
+        <nav className="nav" aria-label="Navegación principal">
+          <a className="brand" href="#inicio" aria-label="Toilet as a Service, inicio">
+            <span className="brand-mark">T/</span>
+            <span>TOILET AS A SERVICE</span>
+          </a>
+          <div className="nav-meta">
+            <span>CDMX · 2026</span>
+            <a href="/press">PRESS KIT</a>
           </div>
-          <div className="console-data"><div><span>HIGIENE</span><b>98%</b></div><div><span>ESPERA</span><b>0:00</b></div><div><span>ACCESO</span><b>12s ad</b></div></div>
-          <button className="console-button" onClick={openDemo}><span>DESBLOQUEAR UNIDAD</span><b>↗</b></button>
-          <p>Al continuar aceptas que la urgencia puede ser utilizada para personalizar tu experiencia publicitaria.</p>
+        </nav>
+
+        <div className="hero-copy">
+          <div className="eyebrow"><i /> INFRAESTRUCTURA FINANCIADA POR ATENCIÓN</div>
+          <h1>Mira 12 segundos.<br /><em>Desbloquea 4 minutos.</em></h1>
+          <p>Baños públicos impecables. Acceso inmediato. Un intercambio incómodamente simple.</p>
+          <div className="hero-actions">
+            <button className="primary-action" onClick={openDemo}>DESBLOQUEAR DEMO <span>↗</span></button>
+            <button className="quiet-action" onClick={shareExperience}>COMPARTIR LANZAMIENTO</button>
+          </div>
+        </div>
+
+        <aside className="live-unit" aria-label="Estado de la unidad más cercana">
+          <div><span>UNIDAD</span><b>WC—044</b></div>
+          <div><span>DISTANCIA</span><b>84 M</b></div>
+          <div><span>ESTADO</span><b className="available">DISPONIBLE</b></div>
+        </aside>
+
+        <div className="satire-label">SÁTIRA INTERACTIVA · NO EXISTEN CABINAS REALES</div>
+      </section>
+
+      <section className="manifesto section-shell">
+        <p className="section-index">01 / LA TESIS</p>
+        <div>
+          <h2>Internet monetizó tu atención.<br />Nosotros encontramos lo que faltaba.</h2>
+          <p className="manifesto-copy">TaaS imagina infraestructura urbana patrocinada por anuncios imposibles de omitir. No es una startup. Todavía.</p>
         </div>
       </section>
 
-      <section className="ticker" aria-label="Beneficios"><div>ACCESO 24/7 <span>•</span> LIMPIEZA CERTIFICADA <span>•</span> SIN EFECTIVO <span>•</span> PUBLICIDAD RELEVANTE* <span>•</span> PAPEL GARANTIZADO** <span>•</span> ACCESO 24/7 <span>•</span> LIMPIEZA CERTIFICADA</div></section>
-
-      <section className="share-strip shell" aria-label="Compartir el experimento"><div><span>¿ABSURDO O INEVITABLE?</span><p>{vote ? (vote === "inevitable" ? "Inevitable. Eso es lo preocupante." : "Absurdo. Por ahora.") : "Decide después de probarlo."}</p></div><div className="share-actions"><button aria-pressed={vote === "inevitable"} onClick={() => setVote("inevitable")}>Inevitable</button><button aria-pressed={vote === "absurdo"} onClick={() => setVote("absurdo")}>Absurdo</button><button className="share-primary" onClick={shareExperience}>Compartir ↗</button></div></section>
-
-      <section className="steps shell section" id="como">
-        <div className="section-kicker">01 / PROTOCOLO DE ALIVIO</div>
-        <div className="section-heading"><h2>Tres pasos.<br />Cero monedas.</h2><p>Convertimos cada pausa necesaria en un intercambio de valor simple, medible y extrañamente inevitable.</p></div>
-        <div className="step-grid">
-          <article><span className="step-no">01</span><div className="mini-ui map-ui"><i /><i /><i /><b>84 m</b></div><h3>Encuentra</h3><p>Ubica la cabina disponible más cercana. El color verde significa que todavía llegas.</p></article>
-          <article><span className="step-no">02</span><div className="mini-ui ad-ui"><span>PUBLICIDAD</span><b>00:12</b><div><i /></div><small>No se puede omitir</small></div><h3>Mira</h3><p>Disfruta un mensaje cuidadosamente seleccionado según tu ubicación y nivel de urgencia.</p></article>
-          <article><span className="step-no">03</span><div className="mini-ui unlock-ui"><div className="unlock-ring"><span>✓</span></div><b>ACCESO CONCEDIDO</b><small>04:00 restantes</small></div><h3>Alíviate</h3><p>Tu pase abre la puerta durante cuatro minutos. Tiempo adicional sujeto a patrocinio.</p></article>
+      <section className="protocol" id="protocolo">
+        <div className="protocol-frame">
+          <div className="protocol-heading">
+            <p className="section-index">02 / PROTOCOLO DE ACCESO</p>
+            <h2>La urgencia,<br />convertida en flujo.</h2>
+          </div>
+          <div className="protocol-steps">
+            <article>
+              <span>01</span>
+              <div className="map-visual" aria-hidden="true"><i /><i /><i /><b>84 m</b></div>
+              <h3>ENCUENTRA</h3>
+              <p>La unidad disponible aparece antes de que sea demasiado tarde.</p>
+            </article>
+            <article className="yellow-step">
+              <span>02</span>
+              <div className="timer-visual" aria-hidden="true"><small>ANUNCIO EN CURSO</small><b>00:12</b><i /></div>
+              <h3>MIRA</h3>
+              <p>Doce segundos de atención. Sin skip. Sin letra pequeña.</p>
+            </article>
+            <article>
+              <span>03</span>
+              <div className="unlock-visual" aria-hidden="true"><i>✓</i><b>04:00</b><small>ACCESO CONCEDIDO</small></div>
+              <h3>ENTRA</h3>
+              <p>La puerta se abre. Tu dignidad conserva un recibo.</p>
+            </article>
+          </div>
         </div>
       </section>
 
-      <section className="metrics section" id="negocios">
-        <div className="shell metrics-inner"><div className="section-kicker light">02 / MODELO DE IMPACTO · DATOS SIMULADOS</div><div className="metrics-head"><h2>Cuando la naturaleza llama,<br /><em>tu marca contesta.</em></h2><p>Escenario ilustrativo de una red hipotética. Ninguna cifra representa operaciones reales.</p></div>
-          <div className="metric-grid"><div><b>97.8%</b><span>view-through rate</span></div><div><b>12.4s</b><span>atención promedio</span></div><div><b>3.2M</b><span>impresiones inevitables</span></div><div><b>0.4%</b><span>abandono de sesión</span></div></div>
-          <div className="quote"><p>“El contexto perfecto no existe. Pero hay momentos en los que nadie puede mirar a otro lado.”</p><span>ANA BAÑOS · PERSONAJE FICTICIO DEL CONCEPTO</span></div>
+      <section className="demo-section section-shell">
+        <div className="demo-statement">
+          <p className="section-index">03 / PRUEBA DE CONCEPTO</p>
+          <h2>Product–market fit.<br /><em>Biológico.</em></h2>
+          <p>Una demostración local de 12 segundos. No pedimos ubicación, correo ni tarjeta.</p>
+          <button className="primary-action dark" onClick={openDemo}>INICIAR SIMULACIÓN <span>↗</span></button>
+        </div>
+        <div className="receipt-preview" aria-label="Ejemplo de recibo de acceso">
+          <div className="receipt-top"><span>T/ ACCESS RECEIPT</span><span>#WC044</span></div>
+          <div className="receipt-score"><small>URGENCY SCORE</small><b>94</b><span>/100</span></div>
+          <dl>
+            <div><dt>ATTENTION SPENT</dt><dd>00:12</dd></div>
+            <div><dt>RELIEF UNLOCKED</dt><dd>04:00</dd></div>
+            <div><dt>DATA COLLECTED</dt><dd>NONE</dd></div>
+          </dl>
+          <p>THIS RECEIPT CERTIFIES THAT ONE BASIC HUMAN NEED WAS TEMPORARILY CONVERTED INTO MEDIA INVENTORY.</p>
         </div>
       </section>
 
-      <section className="pricing shell section" id="planes">
-        <div className="section-kicker">03 / ELIGE TU NIVEL DE PRIVACIDAD</div>
-        <div className="section-heading"><h2>Tu necesidad.<br />Tus términos.*</h2><p>Acceso básico sin costo. O paga para que ninguna marca sepa que hoy comiste picante.</p></div>
-        <div className="price-grid">
-          <article><div><span className="plan">AD—SUPPORTED</span><h3>Free Flush</h3><p>Para necesidades espontáneas.</p></div><div className="price"><b>$0</b><span>MXN / acceso</span></div><ul><li>1 anuncio de 12–30 segundos</li><li>4 minutos de acceso</li><li>Papel estándar incluido</li><li>Audio obligatorio</li></ul><button onClick={openDemo}>Usar gratis <span>↗</span></button></article>
-          <article className="featured"><div className="popular">MÁS ELEGIDO</div><div><span className="plan">MEMBRESÍA</span><h3>Flush+</h3><p>Acceso frecuente sin interrupciones.</p></div><div className="price"><b>$79</b><span>MXN / mes · hipotético</span></div><ul><li>Acceso sin anuncios</li><li>10 minutos por sesión</li><li>Papel de doble hoja</li><li>Modo incógnito sanitario</li></ul><button onClick={openDemo}>Ver demo de Flush+ <span>↗</span></button></article>
-          <article><div><span className="plan">EMPRESAS</span><h3>Fleet Relief</h3><p>Convierte metros cuadrados en ingresos.</p></div><div className="price"><b>A medida</b><span>concepto para operadores</span></div><ul><li>Panel de ocupación</li><li>Marca de cabina</li><li>Participación publicitaria</li><li>SLA de papel 99.9%</li></ul><button onClick={() => document.querySelector("#press")?.scrollIntoView({ behavior: "smooth" })}>Ver propuesta conceptual <span>↗</span></button></article>
-        </div><p className="fineprint">* Tus términos pueden incluir los nuestros. Cargo de $4.99 MXN por minuto extra. El papel garantizado requiere consentimiento de cookies.</p>
+      <section className="closing">
+        <p>TOILET AS A SERVICE™</p>
+        <h2>EL FUTURO NO<br />SE PUEDE OMITIR.</h2>
+        <button onClick={shareExperience}>PUBLICAR LA IDEA <span>↗</span></button>
       </section>
 
-      <section className="testimonials shell section"><div className="section-kicker">04 / DESCARGA SOCIAL</div><div className="testimonial-grid">{testimonials.map((item) => <figure key={item.name}><div className="quote-mark">“</div><blockquote>{item.quote}</blockquote><figcaption><b>{item.name}</b><span>{item.role}</span></figcaption></figure>)}</div></section>
+      <footer className="footer">
+        <div className="brand"><span className="brand-mark">T/</span><span>TOILET AS A SERVICE</span></div>
+        <p>Proyecto conceptual independiente sobre infraestructura, privacidad y economía de la atención.</p>
+        <div><a href="/press">PRESS KIT</a><a href="https://github.com/juliosuas/toilet-as-a-service">GITHUB ↗</a></div>
+        <small>Sin cabinas. Sin pagos. Sin recolección de datos. Ciudad de México · 2026.</small>
+      </footer>
 
-      <section className="press-room shell section" id="press"><div className="section-kicker">05 / PRESS ROOM</div><div className="press-grid"><div><h2>Una idea absurda.<br /><em>Demasiado plausible.</em></h2><p>TaaS es una sátira interactiva sobre la monetización de necesidades básicas, creada en Ciudad de México.</p></div><div className="press-card"><span>LA LÍNEA EN 15 PALABRAS</span><b>Una startup convierte la urgencia humana en atención publicitaria medible.</b><button onClick={shareExperience}>Compartir el experimento ↗</button><a href="/og.png" download>Descargar imagen de prensa ↓</a></div></div></section>
+      {demoOpen && (
+        <div className="modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && setDemoOpen(false)}>
+          <section className="modal" role="dialog" aria-modal="true" aria-labelledby="demo-title">
+            <button className="modal-close" aria-label="Cerrar simulación" onClick={() => setDemoOpen(false)}>×</button>
+            {!unlocked ? (
+              <>
+                <div className="modal-header"><span>MENSAJE DEL PATROCINADOR FICTICIO</span><span>NO SE PUEDE OMITIR</span></div>
+                <div className="ad-creative"><small>FIBRA PRIME®</small><h2>QUE MAÑANA<br />NO TE SORPRENDA.</h2><p>Decisiones que se sienten.</p></div>
+                <div className="progress"><i style={{ width: `${((12 - seconds) / 12) * 100}%` }} /></div>
+                <div className="countdown"><span>ACCESO EN</span><b>{String(seconds).padStart(2, "0")}</b><small>SEGUNDOS</small></div>
+                <button className="priority-access" onClick={() => setSeconds(0)}>ACCESO PRIORITARIO · OMITIR SÁTIRA</button>
+              </>
+            ) : (
+              <div className="unlock-state">
+                <span className="unlock-check">✓</span>
+                <p>WC—044 · ACCESO CONCEDIDO</p>
+                <h2 id="demo-title">Intercambiaste atención<br />por una necesidad básica.</h2>
+                <div className="mini-receipt"><span>URGENCY SCORE</span><b>94/100</b><small>12s VISTOS · 04:00 DESBLOQUEADOS</small></div>
+                <p className="disclosure">TaaS es una sátira interactiva. La cabina no existe. El modelo de negocio sí podría.</p>
+                <button className="primary-action" onClick={shareExperience}>COMPARTIR MI RECIBO <span>↗</span></button>
+              </div>
+            )}
+          </section>
+        </div>
+      )}
 
-      <section className="cta"><div className="shell cta-inner"><div><span>ESCENARIO DE DEMOSTRACIÓN · 12 UNIDADES</span><h2>No aguantes<br /><em>el futuro.</em></h2></div><button className="cta-button" onClick={openDemo}><span>INICIAR SIMULACIÓN</span><b>↗</b></button></div></section>
-
-      <footer className="footer shell" id="disclosure"><div className="brand"><span className="brand-mark">T/</span><span>TOILET AS A SERVICE</span></div><p>Sanitation, monetized responsibly™</p><div><a href="#disclosure">Privacidad: no recopilamos datos</a><a href="/press">Prensa</a><a href="#negocios">Concepto para negocios</a></div><small>Proyecto conceptual independiente · Ciudad de México · 2026<br />Sátira sobre infraestructura, privacidad y economía de la atención. No hay cabinas reales.</small></footer>
-
-      {demoOpen && <div className="modal-backdrop" role="presentation" onMouseDown={(e) => e.target === e.currentTarget && setDemoOpen(false)}><section className="modal" role="dialog" aria-modal="true" aria-labelledby="demo-title"><button className="modal-close" aria-label="Cerrar simulación" onClick={() => setDemoOpen(false)}>×</button>{!unlocked ? <><div className="ad-label">DEMO INTERACTIVA · MENSAJE DEL PATROCINADOR FICTICIO</div><div className="ad-creative"><span>FIBRA<br />PRIME</span><p>Decisiones que se sienten<br /><b>mañana.</b></p></div><div className="ad-progress" role="progressbar" aria-label="Progreso del anuncio" aria-valuemin={0} aria-valuemax={12} aria-valuenow={12 - seconds}><div style={{ width: `${((12 - seconds) / 12) * 100}%` }} /></div><h2 id="demo-title">Tu alivio comienza en <b>{seconds}s</b></h2><p className="modal-copy">Simulación local. No se recopila ubicación ni información personal.</p><button className="emergency-access" onClick={() => setSeconds(0)}>Acceso prioritario sin publicidad</button></> : <><div className="success-ring">✓</div><div className="ad-label">IDENTIDAD DE VEJIGA VERIFICADA · RECIBO #WC044</div><h2 id="demo-title">Sobreviviste <b>12 segundos</b> de publicidad.</h2><p className="reveal-copy">Acabas de intercambiar atención por una necesidad básica. TaaS es una sátira interactiva: no hay una cabina detrás de esta pantalla. La economía de la atención sí existe.</p><div className="receipt"><span>URGENCY SCORE</span><b>94/100</b><small>WC—044 · CDMX · SIMULACIÓN</small></div><button className="button button-primary full" onClick={shareExperience}>Compartir mi pase <span>↗</span></button><button className="button full secondary" onClick={reserve}>Finalizar simulación</button></>}</section></div>}
       {toast && <div className="toast" role="status">{toast}<button onClick={() => setToast("")}>×</button></div>}
     </main>
   );

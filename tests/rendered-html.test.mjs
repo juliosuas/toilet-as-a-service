@@ -17,13 +17,13 @@ test("renders the TaaS product experience", async () => {
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
   const html = await response.text();
-  assert.match(html, /<title>TaaS — Sátira interactiva/iu);
-  assert.match(html, /El alivio/);
+  assert.match(html, /<title>Toilet as a Service/iu);
+  assert.match(html, /Mira 12 segundos/);
   assert.match(html, /TOILET AS A SERVICE/);
-  assert.match(html, /Tres pasos/);
-  assert.match(html, /Flush\+/);
-  assert.match(html, /PROTOTIPO INTERACTIVO/);
-  assert.match(html, /No hay cabinas reales/);
+  assert.match(html, /PROTOCOLO DE ACCESO/);
+  assert.match(html, /Product–market fit/);
+  assert.match(html, /SÁTIRA INTERACTIVA/);
+  assert.match(html, /NO EXISTEN CABINAS REALES/);
   assert.doesNotMatch(html, /S\.A\.P\.I\. de C\.V\./);
   assert.doesNotMatch(html, /codex-preview|SkeletonPreview|react-loading-skeleton/);
 });
@@ -34,5 +34,5 @@ test("publishes project-specific social metadata", async () => {
   assert.match(html, /og:image/);
   assert.match(html, /http:\/\/localhost(?::3000)?\/og\.png/);
   assert.match(html, /summary_large_image/);
-  assert.match(html, /sátira interactiva demasiado plausible/i);
+  assert.match(html, /Mira 12 segundos\. Desbloquea 4 minutos/i);
 });
