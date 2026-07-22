@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState, type CSSProperties } from "react";
 type View = "rider" | "operator" | "brand";
 type ReelScene = "locate" | "watch" | "unlock";
 type FieldStudy = "street" | "unit" | "access";
+type SocialChannel = "x" | "linkedin" | "reddit";
 
 const views: Record<View, { label: string; eyebrow: string; title: string; copy: string; stat: string; statLabel: string }> = {
   rider: {
@@ -147,6 +148,16 @@ export default function Home() {
     window.setTimeout(() => setToast(""), 3000);
   }
 
+  function shareTo(channel: SocialChannel) {
+    const url = window.location.href.split("#")[0];
+    const destinations: Record<SocialChannel, string> = {
+      x: `https://twitter.com/intent/tweet?text=${encodeURIComponent(launchCopy)}&url=${encodeURIComponent(url)}`,
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+      reddit: `https://www.reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent("Toilet as a Service — the future cannot be skipped")}`,
+    };
+    window.open(destinations[channel], "_blank", "noopener,noreferrer");
+  }
+
   return (
     <main>
       <header className="topbar shell">
@@ -286,6 +297,14 @@ export default function Home() {
       </section>
 
       <section className="ethics" id="ethics"><div className="shell ethics-grid"><div><p className="section-label">THE IMPORTANT PART</p><h2>A provocative idea.<br />A clear boundary.</h2></div><div><p>TaaS is interactive satire, not an operating restroom network. The prototype collects no location, identity, payment, or behavioral data.</p><ul><li>No physical units</li><li>No payments</li><li>No personal data</li><li>No fake waitlist</li></ul></div></div></section>
+
+      <section className="launch-rail shell" id="share">
+        <div><p className="section-label">MAKE THE PREMISE TRAVEL</p><h2>Too plausible<br />to keep private.</h2></div>
+        <div className="launch-actions">
+          <p>Put the idea where attention already lives. Every link carries the full social preview and the satire disclosure.</p>
+          <div><button onClick={() => shareTo("x")}>Post on X <span>↗</span></button><button onClick={() => shareTo("linkedin")}>Share on LinkedIn <span>↗</span></button><button onClick={() => shareTo("reddit")}>Submit to Reddit <span>↗</span></button><button onClick={shareExperience}>Copy launch link <span>⧉</span></button></div>
+        </div>
+      </section>
 
       <section className="closing shell"><div><span>TOILET AS A SERVICE™</span><h2>The future cannot be skipped.</h2></div><button className="button primary" onClick={shareExperience}>Share the idea <span>↗</span></button></section>
 

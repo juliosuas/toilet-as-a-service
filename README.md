@@ -51,7 +51,9 @@ The simulation runs entirely in the browser. It does not request location, colle
 - Responsive urgency model that changes product tone without changing privacy policy
 - Functional 12-second access sequence with progress, keyboard escape, and priority path
 - Generated access receipt with native share and clipboard fallbacks
+- Direct launch actions for X, LinkedIn, Reddit, and clipboard sharing
 - Dedicated English press room with ready-to-publish launch copy
+- Search-engine metadata, sitemap, robots policy, and CreativeWork structured data
 - Explicit, persistent satire and privacy disclosures
 
 ## Design system
@@ -69,6 +71,8 @@ TaaS uses a product-led visual system rather than generic campaign imagery. Inte
 | Warm cream | Editorial calm and contrast |
 
 Motion is purposeful: availability pulses, a continuous network ticker, live progress, changing data states, and subtle spatial movement. `prefers-reduced-motion` is respected throughout.
+
+Every public route is designed to travel well: the site ships a dedicated 1200 × 630 social card, canonical metadata, Open Graph and Twitter previews, JSON-LD, a sitemap, and direct share actions that preserve the satire disclosure.
 
 ## Technical overview
 
