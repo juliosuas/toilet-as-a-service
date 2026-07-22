@@ -1,5 +1,6 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
+/* eslint-disable @next/next/no-html-link-for-pages -- next/link triggers a Vinext hydration error in this client route. */
 
 const posts = [
   "The attention economy found the last thing we had left: urgency. Watch 12 seconds. Unlock 4 minutes. Toilet as a Service.",

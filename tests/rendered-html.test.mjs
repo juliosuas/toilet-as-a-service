@@ -22,6 +22,8 @@ test("renders the TaaS product experience", async () => {
   assert.match(html, /TOILET AS A SERVICE/);
   assert.match(html, /THE BUSINESS MODEL/);
   assert.match(html, /LIVE URGENCY MODEL/);
+  assert.match(html, /THE ACCESS MOMENT/);
+  assert.match(html, /ART-DIRECTED WITH HIGGSFIELD/);
   assert.match(html, /TaaS is interactive satire/);
   assert.match(html, /No physical units/);
   assert.match(html, /The future cannot be skipped/);

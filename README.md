@@ -54,7 +54,7 @@ The simulation runs entirely in the browser. It does not request location, colle
 
 ## Design system
 
-TaaS uses a product-led visual system instead of campaign imagery. Every visual is built from interface primitives, typography, color, motion, and data—there are no stock photos or AI-generated images in the experience.
+TaaS uses a product-led visual system rather than generic campaign imagery. Interface primitives, typography, color, motion, and data carry the experience; one deliberately art-directed Higgsfield frame illustrates the exact access moment instead of decorating the page.
 
 | Token | Role |
 | --- | --- |
@@ -110,6 +110,7 @@ app/
 └── globals.css       # Visual system, motion, and responsive layout
 public/
 ├── favicon.svg       # Product mark
+├── taas-access-moment.webp # Art-directed Higgsfield campaign frame
 └── og.png            # Code-native social card
 docs/
 └── launch.md         # Launch copy and publishing notes

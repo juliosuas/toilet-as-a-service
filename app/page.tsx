@@ -127,6 +127,21 @@ export default function Home() {
         <div className="thesis-bottom"><p>We imagine a new category of urban infrastructure: useful enough for cities, sustainable enough for operators, and strange enough to make the point.</p><span className="big-number">#01</span></div>
       </section>
 
+      <section className="access-moment shell" aria-label="The sponsored access moment">
+        <div className="access-story">
+          <p className="section-label">THE ACCESS MOMENT</p>
+          <h2>One touch.<br />Twelve seconds.<br /><em>Door open.</em></h2>
+          <p>The sponsor message is not a banner around the product. It is the product interaction.</p>
+          <button onClick={openDemo}>Experience the exchange <span>↗</span></button>
+          <div className="access-sequence" aria-hidden="true"><span>WATCH</span><i /><b>12</b><i /><span>UNLOCK</span></div>
+        </div>
+        <div className="access-photo" role="img" aria-label="A hand reaching for a twelve-second access interface on a cobalt-blue restroom door">
+          <div className="scan-line" />
+          <div className="photo-status"><span>DOOR STATUS</span><b>READY TO UNLOCK</b><i /></div>
+          <div className="photo-credit">ART-DIRECTED WITH HIGGSFIELD · SEEDREAM 5.0 LITE</div>
+        </div>
+      </section>
+
       <section className="product shell" id="product">
         <div className="product-tabs" role="tablist" aria-label="Product views">
           {(Object.keys(views) as View[]).map((key) => <button key={key} role="tab" aria-selected={view === key} onClick={() => setView(key)}><span>0{(Object.keys(views) as View[]).indexOf(key) + 1}</span>{views[key].label}</button>)}
