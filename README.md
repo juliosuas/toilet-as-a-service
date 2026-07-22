@@ -45,7 +45,8 @@ The simulation runs entirely in the browser. It does not request location, colle
 ## Product surfaces
 
 - Interactive network map with selectable restroom units and live walking estimates
-- Three-scene visual reel combining campaign art, an original motion loop, and the Higgsfield access frame
+- Three-scene visual reel combining campaign art, an original motion loop, and the physical Unit 17 study
+- Interactive blue-hour field gallery spanning street context, the full unit, and its access terminal
 - Three switchable views for riders, city operators, and sponsoring brands
 - Responsive urgency model that changes product tone without changing privacy policy
 - Functional 12-second access sequence with progress, keyboard escape, and priority path
@@ -55,7 +56,7 @@ The simulation runs entirely in the browser. It does not request location, colle
 
 ## Design system
 
-TaaS uses a product-led visual system rather than generic campaign imagery. Interface primitives, typography, color, motion, and data carry the experience. The Unit 17 night study is the physical product anchor; a deliberately art-directed Higgsfield detail, the launch composite, and a bespoke animated countdown complete the locate → watch → unlock visual story.
+TaaS uses a product-led visual system rather than generic campaign imagery. Interface primitives, typography, color, motion, and data carry the experience. The original Unit 17 night study remains the physical product anchor, recolored in cobalt and mint without losing its stainless-steel street character. Two companion field studies expand that language from city-block scale to the access terminal, while the launch composite and bespoke animated countdown complete the locate → watch → unlock story.
 
 | Token | Role |
 | --- | --- |
@@ -112,7 +113,10 @@ app/
 public/
 ├── favicon.svg       # Product mark
 ├── access-exchange-loop.svg # Lightweight original countdown animation
-├── taas-unit-17.webp # Physical product concept at night
+├── taas-unit-17.webp # Preserved source study in its original palette
+├── taas-unit-17-blue.webp # Cobalt Unit 17 hero study
+├── taas-unit-street-blue.webp # Wide blue-hour street deployment study
+├── taas-access-terminal-blue.webp # Close access-terminal study
 ├── taas-access-moment.webp # Art-directed Higgsfield campaign frame
 └── og.png            # Code-native social card
 docs/

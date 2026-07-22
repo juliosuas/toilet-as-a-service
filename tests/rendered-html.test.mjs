@@ -27,8 +27,13 @@ test("renders the TaaS product experience", async () => {
   assert.match(html, /Three beats/);
   assert.match(html, /One inevitable flow/);
   assert.match(html, /CONCEPT UNIT 17/);
+  assert.match(html, /FIELD STUDIES/);
+  assert.match(html, /Three distances/);
   assert.equal(existsSync(new URL("../public/access-exchange-loop.svg", import.meta.url)), true);
   assert.equal(existsSync(new URL("../public/taas-unit-17.webp", import.meta.url)), true);
+  assert.equal(existsSync(new URL("../public/taas-unit-17-blue.webp", import.meta.url)), true);
+  assert.equal(existsSync(new URL("../public/taas-unit-street-blue.webp", import.meta.url)), true);
+  assert.equal(existsSync(new URL("../public/taas-access-terminal-blue.webp", import.meta.url)), true);
   assert.match(html, /TaaS is interactive satire/);
   assert.match(html, /No physical units/);
   assert.match(html, /The future cannot be skipped/);

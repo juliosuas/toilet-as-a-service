@@ -1,9 +1,11 @@
 "use client";
+/* eslint-disable @next/next/no-img-element -- Vinext image optimization returns 500 for local WebP assets. */
 
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 
 type View = "rider" | "operator" | "brand";
 type ReelScene = "locate" | "watch" | "unlock";
+type FieldStudy = "street" | "unit" | "access";
 
 const views: Record<View, { label: string; eyebrow: string; title: string; copy: string; stat: string; statLabel: string }> = {
   rider: {
@@ -59,6 +61,39 @@ const reelScenes: Record<ReelScene, { index: string; label: string; title: strin
   },
 };
 
+const fieldStudies: Record<FieldStudy, { index: string; label: string; title: string; copy: string; image: string; width: number; height: number; position: string }> = {
+  street: {
+    index: "01",
+    label: "Street network",
+    title: "Built to belong to the city.",
+    copy: "A calm, legible piece of public infrastructure—visible before the need becomes urgent.",
+    image: "/taas-unit-street-blue.webp",
+    width: 1672,
+    height: 941,
+    position: "center",
+  },
+  unit: {
+    index: "02",
+    label: "Unit 17",
+    title: "The twelve-second exchange, made physical.",
+    copy: "The original night study, preserved and recolored in the cobalt, navy, mint, and cream product palette.",
+    image: "/taas-unit-17-blue.webp",
+    width: 1215,
+    height: 1295,
+    position: "center 44%",
+  },
+  access: {
+    index: "03",
+    label: "Access terminal",
+    title: "One gesture. One clear countdown.",
+    copy: "The phone starts the exchange; the physical screen makes the cost of access impossible to miss.",
+    image: "/taas-access-terminal-blue.webp",
+    width: 1122,
+    height: 1402,
+    position: "center 54%",
+  },
+};
+
 const launchCopy = "The last unmonetized moment is now a media channel. Toilet as a Service: watch 12 seconds, unlock 4 minutes.";
 
 export default function Home() {
@@ -69,6 +104,7 @@ export default function Home() {
   const [urgency, setUrgency] = useState(72);
   const [selectedUnit, setSelectedUnit] = useState("WC—044");
   const [reelScene, setReelScene] = useState<ReelScene>("unlock");
+  const [fieldStudy, setFieldStudy] = useState<FieldStudy>("street");
   const unlocked = seconds === 0;
 
   const urgencyState = useMemo(() => {
@@ -176,6 +212,39 @@ export default function Home() {
           {(Object.keys(reelScenes) as ReelScene[]).map((key) => (
             <button key={key} role="tab" aria-selected={reelScene === key} onClick={() => setReelScene(key)}>
               <span>{reelScenes[key].index}</span><b>{reelScenes[key].label}</b><i aria-hidden="true" />
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="field-studies shell" aria-labelledby="field-studies-title">
+        <header className="field-heading">
+          <div><p className="section-label">FIELD STUDIES · BLUE HOUR</p><h2 id="field-studies-title">One system.<br /><em>Three distances.</em></h2></div>
+          <p>From the block to the screen, every surface uses the same visual language: civic steel, electric cobalt, quiet mint, and a countdown you can read at a glance.</p>
+        </header>
+        <div className="field-stage">
+          <img
+            key={fieldStudy}
+            src={fieldStudies[fieldStudy].image}
+            alt={`${fieldStudies[fieldStudy].label}: ${fieldStudies[fieldStudy].title}`}
+            width={fieldStudies[fieldStudy].width}
+            height={fieldStudies[fieldStudy].height}
+            style={{ objectPosition: fieldStudies[fieldStudy].position }}
+          />
+          <div className="field-wash" aria-hidden="true" />
+          <div className="field-copy" key={`${fieldStudy}-copy`}>
+            <span>STUDY {fieldStudies[fieldStudy].index} · T/AAS SYSTEM</span>
+            <h3>{fieldStudies[fieldStudy].title}</h3>
+            <p>{fieldStudies[fieldStudy].copy}</p>
+          </div>
+          <div className="field-mark" aria-hidden="true">T/</div>
+        </div>
+        <div className="field-switcher" role="tablist" aria-label="Physical product field studies">
+          {(Object.keys(fieldStudies) as FieldStudy[]).map((key) => (
+            <button key={key} role="tab" aria-selected={fieldStudy === key} onClick={() => setFieldStudy(key)}>
+              <span className="field-thumb"><img src={fieldStudies[key].image} alt="" width={fieldStudies[key].width} height={fieldStudies[key].height} style={{ objectPosition: fieldStudies[key].position }} /></span>
+              <span className="field-tab-copy"><small>{fieldStudies[key].index}</small><b>{fieldStudies[key].label}</b></span>
+              <i aria-hidden="true">↗</i>
             </button>
           ))}
         </div>
