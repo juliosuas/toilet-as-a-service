@@ -18,12 +18,13 @@ test("renders the TaaS product experience", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
   const html = await response.text();
   assert.match(html, /<title>Toilet as a Service/iu);
-  assert.match(html, /Mira 12 segundos/);
+  assert.match(html, /Relief,/);
   assert.match(html, /TOILET AS A SERVICE/);
-  assert.match(html, /PROTOCOLO DE ACCESO/);
-  assert.match(html, /Product–market fit/);
-  assert.match(html, /SÁTIRA INTERACTIVA/);
-  assert.match(html, /NO EXISTEN CABINAS REALES/);
+  assert.match(html, /THE BUSINESS MODEL/);
+  assert.match(html, /LIVE URGENCY MODEL/);
+  assert.match(html, /TaaS is interactive satire/);
+  assert.match(html, /No physical units/);
+  assert.match(html, /The future cannot be skipped/);
   assert.doesNotMatch(html, /S\.A\.P\.I\. de C\.V\./);
   assert.doesNotMatch(html, /codex-preview|SkeletonPreview|react-loading-skeleton/);
 });
@@ -34,5 +35,5 @@ test("publishes project-specific social metadata", async () => {
   assert.match(html, /og:image/);
   assert.match(html, /http:\/\/localhost(?::3000)?\/og\.png/);
   assert.match(html, /summary_large_image/);
-  assert.match(html, /Mira 12 segundos\. Desbloquea 4 minutos/i);
+  assert.match(html, /Watch 12 seconds\. Unlock 4 minutes/i);
 });

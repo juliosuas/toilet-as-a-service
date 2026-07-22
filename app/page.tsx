@@ -1,35 +1,67 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
 
-const launchCopy =
-  "La economía de la atención encontró lo último que quedaba: tu urgencia. Mira 12 segundos. Desbloquea 4 minutos. Toilet as a Service.";
+type View = "rider" | "operator" | "brand";
+
+const views: Record<View, { label: string; eyebrow: string; title: string; copy: string; stat: string; statLabel: string }> = {
+  rider: {
+    label: "For people",
+    eyebrow: "THE RIDER APP",
+    title: "Find relief before it becomes a crisis.",
+    copy: "See live availability, hygiene status, and walking time. One tap starts the access sequence.",
+    stat: "84 m",
+    statLabel: "nearest available unit",
+  },
+  operator: {
+    label: "For cities",
+    eyebrow: "THE OPERATING SYSTEM",
+    title: "Public infrastructure that can fund itself.",
+    copy: "Monitor usage, cleaning cycles, supplies, and uptime from one calm operational layer.",
+    stat: "99.4%",
+    statLabel: "simulated network uptime",
+  },
+  brand: {
+    label: "For brands",
+    eyebrow: "THE MEDIA NETWORK",
+    title: "Twelve seconds of impossible-to-ignore context.",
+    copy: "Sponsor access without collecting identity, browsing history, or precise movement data.",
+    stat: "12 sec",
+    statLabel: "fixed attention window",
+  },
+};
+
+const launchCopy = "The last unmonetized moment is now a media channel. Toilet as a Service: watch 12 seconds, unlock 4 minutes.";
 
 export default function Home() {
   const [demoOpen, setDemoOpen] = useState(false);
   const [seconds, setSeconds] = useState(12);
   const [toast, setToast] = useState("");
+  const [view, setView] = useState<View>("rider");
+  const [urgency, setUrgency] = useState(72);
+  const [selectedUnit, setSelectedUnit] = useState("WC—044");
   const unlocked = seconds === 0;
+
+  const urgencyState = useMemo(() => {
+    if (urgency > 84) return { label: "CRITICAL", eta: "NOW", color: "coral" };
+    if (urgency > 55) return { label: "HIGH", eta: "2 MIN", color: "sun" };
+    return { label: "MANAGEABLE", eta: "6 MIN", color: "mint" };
+  }, [urgency]);
 
   useEffect(() => {
     if (!demoOpen || seconds <= 0) return;
-    const timer = window.setInterval(
-      () => setSeconds((value) => Math.max(0, value - 1)),
-      1000,
-    );
+    const timer = window.setInterval(() => setSeconds((value) => Math.max(0, value - 1)), 1000);
     return () => window.clearInterval(timer);
   }, [demoOpen, seconds]);
 
   useEffect(() => {
     if (!demoOpen) return;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setDemoOpen(false);
-    };
+    const close = (event: KeyboardEvent) => event.key === "Escape" && setDemoOpen(false);
     document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", closeOnEscape);
+    window.addEventListener("keydown", close);
     return () => {
       document.body.style.overflow = "";
-      window.removeEventListener("keydown", closeOnEscape);
+      window.removeEventListener("keydown", close);
     };
   }, [demoOpen]);
 
@@ -41,149 +73,102 @@ export default function Home() {
   async function shareExperience() {
     const url = window.location.href.split("#")[0];
     try {
-      if (navigator.share) {
-        await navigator.share({ title: "Toilet as a Service", text: launchCopy, url });
-      } else {
-        await navigator.clipboard.writeText(`${launchCopy} ${url}`);
-      }
-      setToast("Copy y enlace listos. La urgencia ya es contenido.");
+      if (navigator.share) await navigator.share({ title: "Toilet as a Service", text: launchCopy, url });
+      else await navigator.clipboard.writeText(`${launchCopy} ${url}`);
+      setToast("Launch copy and link copied.");
     } catch {
-      setToast("Compartir cancelado.");
+      setToast("Share cancelled.");
     }
-    window.setTimeout(() => setToast(""), 3200);
+    window.setTimeout(() => setToast(""), 3000);
   }
 
   return (
     <main>
-      <section className="hero" id="inicio">
-        <div className="hero-image" role="img" aria-label="Cabina urbana de Toilet as a Service durante la noche" />
-        <div className="hero-shade" />
+      <header className="topbar shell">
+        <a className="brand" href="#top" aria-label="Toilet as a Service, home"><span>T/</span><b>TOILET AS A SERVICE</b></a>
+        <nav aria-label="Primary navigation"><a href="#product">Product</a><a href="#model">Model</a><a href="#ethics">Ethics</a></nav>
+        <button className="nav-cta" onClick={openDemo}>Find relief <span>↗</span></button>
+      </header>
 
-        <nav className="nav" aria-label="Navegación principal">
-          <a className="brand" href="#inicio" aria-label="Toilet as a Service, inicio">
-            <span className="brand-mark">T/</span>
-            <span>TOILET AS A SERVICE</span>
-          </a>
-          <div className="nav-meta">
-            <span>CDMX · 2026</span>
-            <a href="/press">PRESS KIT</a>
-          </div>
-        </nav>
-
+      <section className="hero shell" id="top">
         <div className="hero-copy">
-          <div className="eyebrow"><i /> INFRAESTRUCTURA FINANCIADA POR ATENCIÓN</div>
-          <h1>Mira 12 segundos.<br /><em>Desbloquea 4 minutos.</em></h1>
-          <p>Baños públicos impecables. Acceso inmediato. Un intercambio incómodamente simple.</p>
-          <div className="hero-actions">
-            <button className="primary-action" onClick={openDemo}>DESBLOQUEAR DEMO <span>↗</span></button>
-            <button className="quiet-action" onClick={shareExperience}>COMPARTIR LANZAMIENTO</button>
+          <div className="beta-pill"><i /> PRIVATE BETA · 12 UNITS ONLINE</div>
+          <h1>Relief,<br /><em>as a service.</em></h1>
+          <p>A clean public restroom when you need it. Watch one short sponsor message. Unlock the door. Carry on.</p>
+          <div className="hero-actions"><button className="button primary" onClick={openDemo}>Try the access flow <span>↗</span></button><a href="#product">See the product <span>↓</span></a></div>
+          <div className="hero-proof"><div><b>4.9</b><span>concept rating</span></div><div><b>84 m</b><span>nearest unit</span></div><div><b>0</b><span>personal data points</span></div></div>
+        </div>
+
+        <div className="network-console" aria-label="Interactive network map">
+          <div className="console-head"><div><span>LIVE NETWORK</span><b>ROMA NORTE, CDMX</b></div><div className="online"><i /> 12 ONLINE</div></div>
+          <div className="map">
+            <div className="road road-a" /><div className="road road-b" /><div className="road road-c" /><div className="road road-d" />
+            <span className="district d1">ROMA N.</span><span className="district d2">JUÁREZ</span><span className="district d3">CONDESA</span>
+            <button className={`map-pin p1 ${selectedUnit === "WC—044" ? "active" : ""}`} onClick={() => setSelectedUnit("WC—044")} aria-label="Select unit WC-044"><i />044</button>
+            <button className={`map-pin p2 ${selectedUnit === "WC—027" ? "active" : ""}`} onClick={() => setSelectedUnit("WC—027")} aria-label="Select unit WC-027"><i />027</button>
+            <button className={`map-pin p3 ${selectedUnit === "WC—081" ? "active" : ""}`} onClick={() => setSelectedUnit("WC—081")} aria-label="Select unit WC-081"><i />081</button>
+            <div className="you-are-here"><i /> YOU</div>
+          </div>
+          <div className="unit-card">
+            <div><span>SELECTED UNIT</span><h2>{selectedUnit}</h2><p>Available · cleaned 3 min ago</p></div>
+            <div className="arrival"><span>WALK</span><b>{selectedUnit === "WC—044" ? "1:12" : selectedUnit === "WC—027" ? "3:40" : "5:08"}</b></div>
+            <button onClick={openDemo}>Reserve for 2 min <span>→</span></button>
+          </div>
+          <div className="float-card hygiene"><span>HYGIENE</span><b>98%</b><i /></div>
+          <div className="float-card access"><span>ACCESS</span><b>12 sec ad</b></div>
+        </div>
+      </section>
+
+      <div className="marquee" aria-hidden="true"><div>ACCESS 24/7 <i /> LIVE AVAILABILITY <i /> CONTACTLESS ENTRY <i /> PRIVACY BY DEFAULT <i /> CLEANING VERIFIED <i /> ACCESS 24/7 <i /> LIVE AVAILABILITY <i /> CONTACTLESS ENTRY <i /></div></div>
+
+      <section className="thesis shell">
+        <p className="section-label">THE OPPORTUNITY</p>
+        <h2>The attention economy has entered the <em>physical world.</em></h2>
+        <div className="thesis-bottom"><p>We imagine a new category of urban infrastructure: useful enough for cities, sustainable enough for operators, and strange enough to make the point.</p><span className="big-number">#01</span></div>
+      </section>
+
+      <section className="product shell" id="product">
+        <div className="product-tabs" role="tablist" aria-label="Product views">
+          {(Object.keys(views) as View[]).map((key) => <button key={key} role="tab" aria-selected={view === key} onClick={() => setView(key)}><span>0{(Object.keys(views) as View[]).indexOf(key) + 1}</span>{views[key].label}</button>)}
+        </div>
+        <div className="product-stage">
+          <div className="product-copy" key={view}><span>{views[view].eyebrow}</span><h2>{views[view].title}</h2><p>{views[view].copy}</p><button onClick={openDemo}>Open live prototype <span>↗</span></button></div>
+          <div className={`product-demo demo-${view}`}>
+            <div className="demo-orbit orbit-one" /><div className="demo-orbit orbit-two" />
+            <div className="phone-shell">
+              <div className="phone-top"><span>9:41</span><i /></div>
+              {view === "rider" && <><div className="mini-map"><i className="mini-user" /><i className="mini-pin mp1" /><i className="mini-pin mp2" /><div className="mini-route" /></div><div className="phone-panel"><span>NEAREST UNIT</span><b>WC—044 · 84 m</b><button onClick={openDemo}>UNLOCK ACCESS</button></div></>}
+              {view === "operator" && <><div className="ops-title"><span>NETWORK HEALTH</span><b>12 / 12</b><small>ALL SYSTEMS OPERATIONAL</small></div><div className="ops-bars"><i style={{height:"72%"}}/><i style={{height:"48%"}}/><i style={{height:"88%"}}/><i style={{height:"64%"}}/><i style={{height:"92%"}}/><i style={{height:"58%"}}/></div><div className="ops-row"><span>Next service cycle</span><b>18 min</b></div></>}
+              {view === "brand" && <><div className="ad-preview"><small>SPONSORED ACCESS</small><b>12</b><span>SECONDS</span><i /></div><div className="brand-row"><span>PRIVACY MODE</span><b>ANONYMOUS ✓</b></div></>}
+            </div>
+            <div className="stage-stat"><span>{views[view].statLabel}</span><b>{views[view].stat}</b></div>
           </div>
         </div>
-
-        <aside className="live-unit" aria-label="Estado de la unidad más cercana">
-          <div><span>UNIDAD</span><b>WC—044</b></div>
-          <div><span>DISTANCIA</span><b>84 M</b></div>
-          <div><span>ESTADO</span><b className="available">DISPONIBLE</b></div>
-        </aside>
-
-        <div className="satire-label">SÁTIRA INTERACTIVA · NO EXISTEN CABINAS REALES</div>
       </section>
 
-      <section className="manifesto section-shell">
-        <p className="section-index">01 / LA TESIS</p>
-        <div>
-          <h2>Internet monetizó tu atención.<br />Nosotros encontramos lo que faltaba.</h2>
-          <p className="manifesto-copy">TaaS imagina infraestructura urbana patrocinada por anuncios imposibles de omitir. No es una startup. Todavía.</p>
+      <section className="model" id="model">
+        <div className="shell"><p className="section-label">THE BUSINESS MODEL</p><div className="model-head"><h2>Simple enough<br />to sound inevitable.</h2><p>The sponsor funds access. The operator maintains the network. The user gets a clean restroom without an account or a payment.</p></div>
+          <div className="flow"><article><span>01</span><div className="flow-icon radar"><i /></div><h3>Locate</h3><p>Live supply meets urgent demand.</p></article><b>→</b><article><span>02</span><div className="flow-icon play">▶</div><h3>Watch</h3><p>One fixed sponsor message.</p></article><b>→</b><article><span>03</span><div className="flow-icon check">✓</div><h3>Unlock</h3><p>Four minutes of private access.</p></article></div>
         </div>
       </section>
 
-      <section className="protocol" id="protocolo">
-        <div className="protocol-frame">
-          <div className="protocol-heading">
-            <p className="section-index">02 / PROTOCOLO DE ACCESO</p>
-            <h2>La urgencia,<br />convertida en flujo.</h2>
-          </div>
-          <div className="protocol-steps">
-            <article>
-              <span>01</span>
-              <div className="map-visual" aria-hidden="true"><i /><i /><i /><b>84 m</b></div>
-              <h3>ENCUENTRA</h3>
-              <p>La unidad disponible aparece antes de que sea demasiado tarde.</p>
-            </article>
-            <article className="yellow-step">
-              <span>02</span>
-              <div className="timer-visual" aria-hidden="true"><small>ANUNCIO EN CURSO</small><b>00:12</b><i /></div>
-              <h3>MIRA</h3>
-              <p>Doce segundos de atención. Sin skip. Sin letra pequeña.</p>
-            </article>
-            <article>
-              <span>03</span>
-              <div className="unlock-visual" aria-hidden="true"><i>✓</i><b>04:00</b><small>ACCESO CONCEDIDO</small></div>
-              <h3>ENTRA</h3>
-              <p>La puerta se abre. Tu dignidad conserva un recibo.</p>
-            </article>
-          </div>
+      <section className="simulator shell">
+        <div className="sim-copy"><p className="section-label">LIVE URGENCY MODEL</p><h2>How badly do you need it?</h2><p>Adjust the slider. The product changes its tone, never its privacy policy.</p></div>
+        <div className={`urgency-card ${urgencyState.color}`}>
+          <div className="urgency-top"><span>URGENCY INDEX</span><b>{urgency}</b></div>
+          <input aria-label="Urgency level" type="range" min="10" max="100" value={urgency} onChange={(event) => setUrgency(Number(event.target.value))} style={{"--value": `${urgency}%`} as CSSProperties} />
+          <div className="range-labels"><span>PLENTY OF TIME</span><span>CRITICAL</span></div>
+          <div className="urgency-result"><div><span>STATUS</span><b>{urgencyState.label}</b></div><div><span>RECOMMENDED ACCESS</span><b>{urgencyState.eta}</b></div><button onClick={openDemo}>START 12-SECOND ACCESS <span>↗</span></button></div>
         </div>
       </section>
 
-      <section className="demo-section section-shell">
-        <div className="demo-statement">
-          <p className="section-index">03 / PRUEBA DE CONCEPTO</p>
-          <h2>Product–market fit.<br /><em>Biológico.</em></h2>
-          <p>Una demostración local de 12 segundos. No pedimos ubicación, correo ni tarjeta.</p>
-          <button className="primary-action dark" onClick={openDemo}>INICIAR SIMULACIÓN <span>↗</span></button>
-        </div>
-        <div className="receipt-preview" aria-label="Ejemplo de recibo de acceso">
-          <div className="receipt-top"><span>T/ ACCESS RECEIPT</span><span>#WC044</span></div>
-          <div className="receipt-score"><small>URGENCY SCORE</small><b>94</b><span>/100</span></div>
-          <dl>
-            <div><dt>ATTENTION SPENT</dt><dd>00:12</dd></div>
-            <div><dt>RELIEF UNLOCKED</dt><dd>04:00</dd></div>
-            <div><dt>DATA COLLECTED</dt><dd>NONE</dd></div>
-          </dl>
-          <p>THIS RECEIPT CERTIFIES THAT ONE BASIC HUMAN NEED WAS TEMPORARILY CONVERTED INTO MEDIA INVENTORY.</p>
-        </div>
-      </section>
+      <section className="ethics" id="ethics"><div className="shell ethics-grid"><div><p className="section-label">THE IMPORTANT PART</p><h2>A provocative idea.<br />A clear boundary.</h2></div><div><p>TaaS is interactive satire, not an operating restroom network. The prototype collects no location, identity, payment, or behavioral data.</p><ul><li>No physical units</li><li>No payments</li><li>No personal data</li><li>No fake waitlist</li></ul></div></div></section>
 
-      <section className="closing">
-        <p>TOILET AS A SERVICE™</p>
-        <h2>EL FUTURO NO<br />SE PUEDE OMITIR.</h2>
-        <button onClick={shareExperience}>PUBLICAR LA IDEA <span>↗</span></button>
-      </section>
+      <section className="closing shell"><div><span>TOILET AS A SERVICE™</span><h2>The future cannot be skipped.</h2></div><button className="button primary" onClick={shareExperience}>Share the idea <span>↗</span></button></section>
 
-      <footer className="footer">
-        <div className="brand"><span className="brand-mark">T/</span><span>TOILET AS A SERVICE</span></div>
-        <p>Proyecto conceptual independiente sobre infraestructura, privacidad y economía de la atención.</p>
-        <div><a href="/press">PRESS KIT</a><a href="https://github.com/juliosuas/toilet-as-a-service">GITHUB ↗</a></div>
-        <small>Sin cabinas. Sin pagos. Sin recolección de datos. Ciudad de México · 2026.</small>
-      </footer>
+      <footer className="footer shell"><div className="brand"><span>T/</span><b>TOILET AS A SERVICE</b></div><p>Independent conceptual project · Mexico City · 2026</p><div><a href="/press">Press kit</a><a href="https://github.com/juliosuas/toilet-as-a-service">GitHub ↗</a></div></footer>
 
-      {demoOpen && (
-        <div className="modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && setDemoOpen(false)}>
-          <section className="modal" role="dialog" aria-modal="true" aria-labelledby="demo-title">
-            <button className="modal-close" aria-label="Cerrar simulación" onClick={() => setDemoOpen(false)}>×</button>
-            {!unlocked ? (
-              <>
-                <div className="modal-header"><span>MENSAJE DEL PATROCINADOR FICTICIO</span><span>NO SE PUEDE OMITIR</span></div>
-                <div className="ad-creative"><small>FIBRA PRIME®</small><h2>QUE MAÑANA<br />NO TE SORPRENDA.</h2><p>Decisiones que se sienten.</p></div>
-                <div className="progress"><i style={{ width: `${((12 - seconds) / 12) * 100}%` }} /></div>
-                <div className="countdown"><span>ACCESO EN</span><b>{String(seconds).padStart(2, "0")}</b><small>SEGUNDOS</small></div>
-                <button className="priority-access" onClick={() => setSeconds(0)}>ACCESO PRIORITARIO · OMITIR SÁTIRA</button>
-              </>
-            ) : (
-              <div className="unlock-state">
-                <span className="unlock-check">✓</span>
-                <p>WC—044 · ACCESO CONCEDIDO</p>
-                <h2 id="demo-title">Intercambiaste atención<br />por una necesidad básica.</h2>
-                <div className="mini-receipt"><span>URGENCY SCORE</span><b>94/100</b><small>12s VISTOS · 04:00 DESBLOQUEADOS</small></div>
-                <p className="disclosure">TaaS es una sátira interactiva. La cabina no existe. El modelo de negocio sí podría.</p>
-                <button className="primary-action" onClick={shareExperience}>COMPARTIR MI RECIBO <span>↗</span></button>
-              </div>
-            )}
-          </section>
-        </div>
-      )}
-
+      {demoOpen && <div className="modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && setDemoOpen(false)}><section className="modal" role="dialog" aria-modal="true" aria-label="Sponsored access simulation"><button className="modal-close" aria-label="Close simulation" onClick={() => setDemoOpen(false)}>×</button>{!unlocked ? <><div className="modal-ad"><div className="modal-ad-top"><span>SPONSORED ACCESS · FICTIONAL AD</span><span>NO SKIP</span></div><div className="ad-message"><small>FIBER PRIME®</small><h2>Tomorrow has<br />enough surprises.</h2><p>Make one less of them yours.</p><div className="ad-shapes"><i /><i /><i /></div></div><div className="ad-progress"><i style={{width:`${((12-seconds)/12)*100}%`}} /></div><div className="modal-count"><span>ACCESS IN</span><b>{String(seconds).padStart(2,"0")}</b><small>SECONDS</small></div><button className="priority" onClick={() => setSeconds(0)}>PRIORITY ACCESS · SKIP THE SATIRE</button></div></> : <div className="unlocked"><div className="success-mark">✓</div><span>WC—044 · ACCESS GRANTED</span><h2>You traded attention<br />for a basic human need.</h2><div className="receipt"><span>URGENCY SCORE</span><b>{urgency}/100</b><small>12 SEC WATCHED · 04:00 UNLOCKED</small></div><p>TaaS is interactive satire. The unit does not exist. The business model could.</p><button className="button primary" onClick={shareExperience}>Share my receipt <span>↗</span></button></div>}</section></div>}
       {toast && <div className="toast" role="status">{toast}<button onClick={() => setToast("")}>×</button></div>}
     </main>
   );

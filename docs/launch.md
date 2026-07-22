@@ -2,9 +2,9 @@
 
 ## Primary post
 
-> La economía de la atención encontró lo último que quedaba: tu urgencia.
+> The attention economy found the last thing we had left: urgency.
 >
-> Mira 12 segundos. Desbloquea 4 minutos.
+> Watch 12 seconds. Unlock 4 minutes.
 >
 > Toilet as a Service.
 >
@@ -12,11 +12,19 @@
 
 ## Alternate post
 
-> SaaS monetizó el trabajo. Las apps monetizaron la atención. Nosotros encontramos lo último que quedaba.
+> SaaS monetized work. Apps monetized attention. We found the last unmonetized moment.
 >
-> Toilet as a Service: baños públicos financiados por anuncios imposibles de omitir.
+> Toilet as a Service: public restrooms funded by impossible-to-ignore ads.
 >
-> Es sátira. Por ahora.
+> It is satire. For now.
+>
+> https://toilet-as-a-service.juliosuas.chatgpt.site
+
+## Short post
+
+> Biological product–market fit.
+>
+> Toilet as a Service: watch 12 seconds, unlock 4 minutes.
 >
 > https://toilet-as-a-service.juliosuas.chatgpt.site
 
@@ -24,9 +32,14 @@
 
 An interactive product satire that turns human urgency into measurable ad inventory.
 
+## Media description
+
+Toilet as a Service imagines a network of clean urban restrooms where one fixed sponsor message funds four minutes of access. The polished interface, operating metrics, and business model are fictional; the critique of attention-funded infrastructure is not.
+
 ## Publishing notes
 
-- Attach `public/og.png` for the 1376 × 768 social image.
-- Lead with the premise; reveal the satire after the product line.
+- Attach `public/og.png`, the 1200 × 630 code-native social card.
+- Lead with the premise; disclose the satire immediately after the product line.
 - Do not describe TaaS as an operating restroom network.
 - Link the press room for longer coverage: https://toilet-as-a-service.juliosuas.chatgpt.site/press
+- Product and launch materials are intentionally English-only.
