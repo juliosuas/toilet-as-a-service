@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+  <title id="title">Sponsored access countdown</title>
+  <desc id="desc">An animated twelve-second access screen in cobalt, coral, mint, and ivory.</desc>
+  <rect width="1440" height="900" fill="#3157f6"/>
+  <path d="M0 0h520v900H0z" fill="#07152f"/>
+  <path d="M520 0h920v110H520z" fill="#7ce7c5"/>
+  <path d="M520 790h920v110H520z" fill="#f7f4ec"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#fff">
+    <text x="72" y="86" font-size="18" font-weight="700" letter-spacing="4">SPONSORED ACCESS</text>
+    <text x="72" y="340" font-size="92" font-weight="800" letter-spacing="-6">THE FUTURE</text>
+    <text x="72" y="430" font-size="92" font-weight="800" letter-spacing="-6">CANNOT BE</text>
+    <text x="72" y="520" font-size="92" font-weight="800" letter-spacing="-6">SKIPPED.</text>
+    <text x="72" y="705" font-size="18" opacity=".62" letter-spacing="3">NO IDENTITY · NO LOCATION · ONE MESSAGE</text>
+  </g>
+  <g transform="translate(980 450)">
+    <circle r="222" fill="#ff7567"/>
+    <circle r="165" fill="#07152f"/>
+    <circle r="190" fill="none" stroke="#f7f4ec" stroke-width="7" stroke-linecap="round" stroke-dasharray="1194" transform="rotate(-90)">
+      <animate attributeName="stroke-dashoffset" from="0" to="1194" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <g fill="#fff" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800">
+      <text y="34" font-size="150">12<set attributeName="opacity" to="0" begin="1s;5s;9s" dur="3s"/></text>
+      <text y="34" font-size="150" opacity="0">11<set attributeName="opacity" to="1" begin="1s;5s;9s" dur="1s"/></text>
+      <text y="34" font-size="150" opacity="0">10<set attributeName="opacity" to="1" begin="2s;6s;10s" dur="1s"/></text>
+      <text y="34" font-size="150" opacity="0">09<set attributeName="opacity" to="1" begin="3s;7s;11s" dur="1s"/></text>
+      <text y="96" font-size="16" letter-spacing="5">SECONDS</text>
+    </g>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#07152f">
+    <text x="568" y="70" font-size="18" font-weight="800" letter-spacing="4">WATCH → UNLOCK</text>
+    <text x="568" y="852" font-size="18" font-weight="800" letter-spacing="4">DOOR WC—044 · READY</text>
+  </g>
+  <rect x="1290" y="28" width="96" height="54" rx="27" fill="#07152f"/>
+  <circle cx="1330" cy="55" r="9" fill="#7ce7c5"><animate attributeName="opacity" values="1;.25;1" dur="1.4s" repeatCount="indefinite"/></circle>
+</svg>

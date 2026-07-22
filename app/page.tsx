@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 
 type View = "rider" | "operator" | "brand";
+type ReelScene = "locate" | "watch" | "unlock";
 
 const views: Record<View, { label: string; eyebrow: string; title: string; copy: string; stat: string; statLabel: string }> = {
   rider: {
@@ -31,6 +32,33 @@ const views: Record<View, { label: string; eyebrow: string; title: string; copy:
   },
 };
 
+const reelScenes: Record<ReelScene, { index: string; label: string; title: string; copy: string; meta: string; aria: string }> = {
+  locate: {
+    index: "01",
+    label: "Locate",
+    title: "Relief appears on the map.",
+    copy: "Live availability turns an urgent search into one obvious next move.",
+    meta: "84 M · 01:12 WALK",
+    aria: "Campaign visual showing the Toilet as a Service live restroom network",
+  },
+  watch: {
+    index: "02",
+    label: "Watch",
+    title: "Attention becomes the key.",
+    copy: "A fixed twelve-second sponsor message funds access without tracking the person watching.",
+    meta: "12 SEC · NO ACCOUNT",
+    aria: "Animated sponsored access countdown",
+  },
+  unlock: {
+    index: "03",
+    label: "Unlock",
+    title: "The door answers in real time.",
+    copy: "The exchange resolves with a clear physical signal: access granted, four minutes available.",
+    meta: "04:00 ACCESS · READY",
+    aria: "A hand reaching for a twelve-second access interface on a cobalt-blue restroom door",
+  },
+};
+
 const launchCopy = "The last unmonetized moment is now a media channel. Toilet as a Service: watch 12 seconds, unlock 4 minutes.";
 
 export default function Home() {
@@ -40,6 +68,7 @@ export default function Home() {
   const [view, setView] = useState<View>("rider");
   const [urgency, setUrgency] = useState(72);
   const [selectedUnit, setSelectedUnit] = useState("WC—044");
+  const [reelScene, setReelScene] = useState<ReelScene>("unlock");
   const unlocked = seconds === 0;
 
   const urgencyState = useMemo(() => {
@@ -127,18 +156,28 @@ export default function Home() {
         <div className="thesis-bottom"><p>We imagine a new category of urban infrastructure: useful enough for cities, sustainable enough for operators, and strange enough to make the point.</p><span className="big-number">#01</span></div>
       </section>
 
-      <section className="access-moment shell" aria-label="The sponsored access moment">
-        <div className="access-story">
-          <p className="section-label">THE ACCESS MOMENT</p>
-          <h2>One touch.<br />Twelve seconds.<br /><em>Door open.</em></h2>
-          <p>The sponsor message is not a banner around the product. It is the product interaction.</p>
-          <button onClick={openDemo}>Experience the exchange <span>↗</span></button>
-          <div className="access-sequence" aria-hidden="true"><span>WATCH</span><i /><b>12</b><i /><span>UNLOCK</span></div>
+      <section className="experience-reel shell" aria-label="The sponsored access story">
+        <header className="reel-heading">
+          <div><p className="section-label">THE ACCESS MOMENT</p><h2>Three beats.<br /><em>One inevitable flow.</em></h2></div>
+          <div><p>The sponsor message is not a banner around the product. It is the product interaction.</p><button onClick={openDemo}>Experience the exchange <span>↗</span></button></div>
+        </header>
+        <div className={`reel-canvas scene-${reelScene}`} key={reelScene}>
+          <div className="reel-media" role="img" aria-label={reelScenes[reelScene].aria} />
+          <div className="reel-scan" aria-hidden="true" />
+          <div className="reel-number" aria-hidden="true">{reelScenes[reelScene].index}</div>
+          <div className="reel-caption">
+            <span>{reelScenes[reelScene].meta}</span>
+            <h3>{reelScenes[reelScene].title}</h3>
+            <p>{reelScenes[reelScene].copy}</p>
+          </div>
+          <div className="reel-credit">{reelScene === "unlock" ? "ART-DIRECTED WITH HIGGSFIELD · SEEDREAM 5.0 LITE" : reelScene === "watch" ? "ORIGINAL MOTION LOOP · T/AAS STUDIO" : "LIVE PRODUCT COMPOSITE · PRIVATE BETA"}</div>
         </div>
-        <div className="access-photo" role="img" aria-label="A hand reaching for a twelve-second access interface on a cobalt-blue restroom door">
-          <div className="scan-line" />
-          <div className="photo-status"><span>DOOR STATUS</span><b>READY TO UNLOCK</b><i /></div>
-          <div className="photo-credit">ART-DIRECTED WITH HIGGSFIELD · SEEDREAM 5.0 LITE</div>
+        <div className="reel-controls" role="tablist" aria-label="Access story scenes">
+          {(Object.keys(reelScenes) as ReelScene[]).map((key) => (
+            <button key={key} role="tab" aria-selected={reelScene === key} onClick={() => setReelScene(key)}>
+              <span>{reelScenes[key].index}</span><b>{reelScenes[key].label}</b><i aria-hidden="true" />
+            </button>
+          ))}
         </div>
       </section>
 

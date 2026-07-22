@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { existsSync } from "node:fs";
 import test from "node:test";
 
 async function render() {
@@ -23,7 +24,10 @@ test("renders the TaaS product experience", async () => {
   assert.match(html, /THE BUSINESS MODEL/);
   assert.match(html, /LIVE URGENCY MODEL/);
   assert.match(html, /THE ACCESS MOMENT/);
+  assert.match(html, /Three beats/);
+  assert.match(html, /One inevitable flow/);
   assert.match(html, /ART-DIRECTED WITH HIGGSFIELD/);
+  assert.equal(existsSync(new URL("../public/access-exchange-loop.svg", import.meta.url)), true);
   assert.match(html, /TaaS is interactive satire/);
   assert.match(html, /No physical units/);
   assert.match(html, /The future cannot be skipped/);

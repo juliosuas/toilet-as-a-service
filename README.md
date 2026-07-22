@@ -45,6 +45,7 @@ The simulation runs entirely in the browser. It does not request location, colle
 ## Product surfaces
 
 - Interactive network map with selectable restroom units and live walking estimates
+- Three-scene visual reel combining campaign art, an original motion loop, and the Higgsfield access frame
 - Three switchable views for riders, city operators, and sponsoring brands
 - Responsive urgency model that changes product tone without changing privacy policy
 - Functional 12-second access sequence with progress, keyboard escape, and priority path
@@ -54,7 +55,7 @@ The simulation runs entirely in the browser. It does not request location, colle
 
 ## Design system
 
-TaaS uses a product-led visual system rather than generic campaign imagery. Interface primitives, typography, color, motion, and data carry the experience; one deliberately art-directed Higgsfield frame illustrates the exact access moment instead of decorating the page.
+TaaS uses a product-led visual system rather than generic campaign imagery. Interface primitives, typography, color, motion, and data carry the experience. A deliberately art-directed Higgsfield frame, the launch composite, and a bespoke animated countdown form a single locate → watch → unlock visual story.
 
 | Token | Role |
 | --- | --- |
@@ -110,6 +111,7 @@ app/
 └── globals.css       # Visual system, motion, and responsive layout
 public/
 ├── favicon.svg       # Product mark
+├── access-exchange-loop.svg # Lightweight original countdown animation
 ├── taas-access-moment.webp # Art-directed Higgsfield campaign frame
 └── og.png            # Code-native social card
 docs/
