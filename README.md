@@ -55,7 +55,7 @@ The simulation runs entirely in the browser. It does not request location, colle
 
 ## Design system
 
-TaaS uses a product-led visual system rather than generic campaign imagery. Interface primitives, typography, color, motion, and data carry the experience. A deliberately art-directed Higgsfield frame, the launch composite, and a bespoke animated countdown form a single locate → watch → unlock visual story.
+TaaS uses a product-led visual system rather than generic campaign imagery. Interface primitives, typography, color, motion, and data carry the experience. The Unit 17 night study is the physical product anchor; a deliberately art-directed Higgsfield detail, the launch composite, and a bespoke animated countdown complete the locate → watch → unlock visual story.
 
 | Token | Role |
 | --- | --- |
@@ -112,6 +112,7 @@ app/
 public/
 ├── favicon.svg       # Product mark
 ├── access-exchange-loop.svg # Lightweight original countdown animation
+├── taas-unit-17.webp # Physical product concept at night
 ├── taas-access-moment.webp # Art-directed Higgsfield campaign frame
 └── og.png            # Code-native social card
 docs/

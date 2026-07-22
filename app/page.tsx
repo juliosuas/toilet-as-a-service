@@ -52,10 +52,10 @@ const reelScenes: Record<ReelScene, { index: string; label: string; title: strin
   unlock: {
     index: "03",
     label: "Unlock",
-    title: "The door answers in real time.",
-    copy: "The exchange resolves with a clear physical signal: access granted, four minutes available.",
-    meta: "04:00 ACCESS · READY",
-    aria: "A hand reaching for a twelve-second access interface on a cobalt-blue restroom door",
+    title: "A new piece of city infrastructure.",
+    copy: "Unit 17 turns the exchange into something physical: visible, immediate, and impossible to mistake for another app.",
+    meta: "UNIT 17 · NIGHT SERVICE",
+    aria: "A stainless-steel Toilet as a Service unit at night with a twelve-second access display",
   },
 };
 
@@ -170,7 +170,7 @@ export default function Home() {
             <h3>{reelScenes[reelScene].title}</h3>
             <p>{reelScenes[reelScene].copy}</p>
           </div>
-          <div className="reel-credit">{reelScene === "unlock" ? "ART-DIRECTED WITH HIGGSFIELD · SEEDREAM 5.0 LITE" : reelScene === "watch" ? "ORIGINAL MOTION LOOP · T/AAS STUDIO" : "LIVE PRODUCT COMPOSITE · PRIVATE BETA"}</div>
+          <div className="reel-credit">{reelScene === "unlock" ? "CONCEPT UNIT 17 · NIGHT DEPLOYMENT STUDY" : reelScene === "watch" ? "ORIGINAL MOTION LOOP · T/AAS STUDIO" : "LIVE PRODUCT COMPOSITE · PRIVATE BETA"}</div>
         </div>
         <div className="reel-controls" role="tablist" aria-label="Access story scenes">
           {(Object.keys(reelScenes) as ReelScene[]).map((key) => (

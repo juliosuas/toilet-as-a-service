@@ -26,8 +26,9 @@ test("renders the TaaS product experience", async () => {
   assert.match(html, /THE ACCESS MOMENT/);
   assert.match(html, /Three beats/);
   assert.match(html, /One inevitable flow/);
-  assert.match(html, /ART-DIRECTED WITH HIGGSFIELD/);
+  assert.match(html, /CONCEPT UNIT 17/);
   assert.equal(existsSync(new URL("../public/access-exchange-loop.svg", import.meta.url)), true);
+  assert.equal(existsSync(new URL("../public/taas-unit-17.webp", import.meta.url)), true);
   assert.match(html, /TaaS is interactive satire/);
   assert.match(html, /No physical units/);
   assert.match(html, /The future cannot be skipped/);
