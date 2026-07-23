@@ -20,8 +20,12 @@ export async function generateMetadata(): Promise<Metadata> {
     creator: "T/AAS Studio",
     category: "Interactive satire",
     keywords: ["interactive satire", "attention economy", "public infrastructure", "speculative design", "product design", "urban technology"],
+    manifest: "/manifest.webmanifest",
     metadataBase: new URL(origin),
-    alternates: { canonical: origin },
+    alternates: {
+      canonical: origin,
+      types: { "application/rss+xml": `${origin}/feed.xml` },
+    },
     robots: { index: true, follow: true },
     openGraph: { type: "website", siteName: "Toilet as a Service", locale: "en_US", title: "Toilet as a Service", description: "Watch 12 seconds. Unlock 4 minutes. The future cannot be skipped.", url: origin, images: [{ url: `${origin}/og.png`, width: 1200, height: 630, alt: "Toilet as a Service — watch 12 seconds, unlock 4 minutes" }] },
     twitter: { card: "summary_large_image", title: "Toilet as a Service", description: "The last unmonetized moment is now a media channel.", images: [`${origin}/og.png`] },

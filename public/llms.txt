@@ -1,0 +1,24 @@
+# Toilet as a Service
+
+> An interactive product satire about attention-funded public infrastructure.
+
+Toilet as a Service (T/AAS) presents a fictional network of public restrooms
+where access is exchanged for one fixed sponsor message: watch 12 seconds,
+unlock 4 minutes. The service is fictional; the interactive experience is
+fully functional and collects no personal data.
+
+## Canonical resources
+
+- Product: https://toilet-as-a-service.juliosuas.chatgpt.site/
+- Press room: https://toilet-as-a-service.juliosuas.chatgpt.site/press
+- RSS feed: https://toilet-as-a-service.juliosuas.chatgpt.site/feed.xml
+- Source: https://github.com/juliosuas/toilet-as-a-service
+- Release: https://github.com/juliosuas/toilet-as-a-service/releases/tag/v1.0.0
+
+## Core facts
+
+- Format: interactive satire and speculative product design
+- Setting: Mexico City
+- Access exchange: one 12-second sponsor message for four minutes of access
+- Privacy: no accounts, payments, precise location, or behavioral profiles
+- Status: public conceptual release; no physical restroom network exists

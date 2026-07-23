@@ -53,6 +53,8 @@ test("publishes project-specific social metadata", async () => {
   assert.match(html, /application\/ld\+json/);
   assert.match(html, /CreativeWork/);
   assert.match(html, /Watch 12 seconds\. Unlock 4 minutes/i);
+  assert.match(html, /rel="manifest"/);
+  assert.match(html, /application\/rss\+xml/);
 });
 
 test("publishes crawlable discovery routes", async () => {
@@ -71,4 +73,18 @@ test("publishes crawlable discovery routes", async () => {
   const xml = await sitemap.text();
   assert.match(xml, /<loc>https:\/\/toilet-as-a-service\.juliosuas\.chatgpt\.site<\/loc>/);
   assert.match(xml, /<loc>https:\/\/toilet-as-a-service\.juliosuas\.chatgpt\.site\/press<\/loc>/);
+
+  const manifest = await worker.fetch(new Request("http://localhost/manifest.webmanifest"), env, context);
+  assert.equal(manifest.status, 200);
+  assert.match(manifest.headers.get("content-type") ?? "", /application\/manifest\+json/i);
+  assert.match(await manifest.text(), /"short_name"\s*:\s*"T\/AAS"/);
+
+  const feed = await worker.fetch(new Request("http://localhost/feed.xml"), env, context);
+  assert.equal(feed.status, 200);
+  assert.match(feed.headers.get("content-type") ?? "", /application\/rss\+xml/i);
+  const feedXml = await feed.text();
+  assert.match(feedXml, /Toilet as a Service v1\.0\.0/);
+  assert.match(feedXml, /taas-v1\.0\.0/);
+
+  assert.equal(existsSync(new URL("../public/llms.txt", import.meta.url)), true);
 });
